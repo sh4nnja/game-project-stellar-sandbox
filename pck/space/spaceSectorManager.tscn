@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp51oah6gmomd"]
+
+[ext_resource type="Script" path="res://scr/spaceSectorManager.gd" id="1_2ohkw"]
+[ext_resource type="Environment" uid="uid://pxr6ffxs2bp7" path="res://tres/scnEnv.tres" id="2_hayf7"]
+[ext_resource type="PackedScene" uid="uid://ndsnl58qknvl" path="res://pck/space/spacePhenomenaGenerator.tscn" id="3_dsiaq"]
+[ext_resource type="PackedScene" uid="uid://ipqn6c3kseo2" path="res://pck/space/spaceBackgroundGenerator.tscn" id="4_y3s4r"]
+
+[node name="spaceSectorManager" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_2ohkw")
+
+[node name="spaceEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_hayf7")
+
+[node name="spaceWall" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="shape" type="CollisionPolygon2D" parent="spaceWall"]
+polygon = PackedVector2Array(2048, 2048, 2048, -2048, -2048, -2048, -2048, 2048, 2048, 2048, 2080, 2080, -2080, 2080, -2080, -2080, 2080, -2080, 2080, 2080)
+
+[node name="spacePhenomenaGenerator" parent="." instance=ExtResource("3_dsiaq")]
+
+[node name="spaceBackgroundGenerator" parent="." instance=ExtResource("4_y3s4r")]
+
+[node name="spaceAssets" type="Node2D" parent="."]
