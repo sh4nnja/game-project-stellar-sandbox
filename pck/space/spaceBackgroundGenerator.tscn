@@ -14,6 +14,7 @@ motion_scale = Vector2(0.1, 0.1)
 
 [node name="spaceBackgroundTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spaceBGTParallax"]
 modulate = Color(0.1, 0, 0.1, 1)
+self_modulate = Color(0.909804, 0.454902, 0.647059, 0.501961)
 
 [node name="spaceGTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
 motion_scale = Vector2(0.2, 0.2)

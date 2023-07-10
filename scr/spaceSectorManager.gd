@@ -5,7 +5,7 @@ extends Node2D
 #@onready var _spaceEnvironment: WorldEnvironment = get_node("spaceEnvironment")
 
 #------------------------------------------------------------------------------#
-var _spaceSectorRandomGeneration: bool = false
+var _spaceSectorRandomGeneration: bool = true
 
 var _spaceSectorSeed: int
 var _spaceSectorBackground: String
@@ -58,10 +58,12 @@ func _initiateSpaceSector() -> void:
 		_spaceSectorPhenomena = int(spaceSectorKey.get_slice("|", 6))
 	
 	# Wait for the scene to be created.
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(1).timeout
 	# Proceed to generation of space.
 	_spaceBackgroundGenerator.initiateThreadForLoading([[_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena]])
 	
+	# Wait for the scene to be created.
+	await get_tree().create_timer(1).timeout
 	# Proceed to generation of space phenomena.
 	_spacePhenomenaGenerator.initiateThreadForLoading([_spaceSectorSeed, _spaceSectorGases[0], _spaceSectorPhenomena])
 

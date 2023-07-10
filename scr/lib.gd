@@ -18,12 +18,7 @@ var spaceGasesMinimumColorValue: float = 0.01
 var spaceGasesMaximumColorValue: float = 1.00
 var spaceGasesColorOpacity: float = 0.5
 
-var spacePhenomenaTextureConfiguration: Array = [
-	
-	
-	
-	
-]
+var spaceSectorEncryptionKey: int = 42
 #------------------------------------------------------------------------------#
 # GLOBAL OBJECTS
 #------------------------------------------------------------------------------#

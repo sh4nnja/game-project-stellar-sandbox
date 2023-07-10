@@ -109,7 +109,7 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 			_spaceTextureColorRamp.offsets = [0.5, 1]
 			_spaceTextureColorRamp.colors = [Color("1a001a"), spaceArray[0][1]]
 			# IGNORE: Debug
-			print("Adjusted space background texture! ", spaceArray[1][_spaceTextureGenerationIteration], "\n")
+			print("Adjusted space background texture! ", spaceArray[1][_spaceTextureGenerationIteration])
 		elif _spaceAssetsIndex in range(2, 5):  
 			# Space gases generation.
 			# Decide to show texture or not.
@@ -123,13 +123,12 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 					_spaceTextureNoise.noise_type = FastNoiseLite.TYPE_PERLIN
 					_spaceTextureColorRamp.offsets = [0.25, 1]
 			else:
-				# Removes the texture if texture is not visible to save memory.
-				var _spaceTextureToBeRemoved = spaceArray[1][_spaceTextureGenerationIteration]
-				spaceArray[1][_spaceTextureGenerationIteration] = 0
-				_spaceTextureToBeRemoved.queue_free()
+				# Removes the objects in texture if texture is not visible to save memory.
+				spaceArray[1][_spaceTextureGenerationIteration].noise = null
+				spaceArray[1][_spaceTextureGenerationIteration].color_ramp = null
 				# IGNORE: Debug
-				print("Queue Free'd' a texture because modulate is 0.", spaceArray[1][_spaceTextureGenerationIteration])
-			print("Adjusted a space gas texture! ", spaceArray[1][_spaceTextureGenerationIteration], "Index: ", _spaceAssetsIndex, "\n")
+				print("Queue Free'd' a texture because modulate is 0. ", spaceArray[1][_spaceTextureGenerationIteration])
+			print("Adjusted a space gas texture! ", spaceArray[1][_spaceTextureGenerationIteration], " Index: ", _spaceAssetsIndex)
 		elif _spaceAssetsIndex > 4: 
 			# Space star generation.
 			_spaceTextureNoise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
@@ -139,12 +138,14 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 			if _spaceAssetsIndex == 5:
 				_spaceTextureColorRamp.offsets = [0.85, 1]
 				# IGNORE: Debug
-				print("Adjusted a space star texture! ", spaceArray[1][_spaceTextureGenerationIteration], "\n")
+				print("Adjusted a space star texture! ", spaceArray[1][_spaceTextureGenerationIteration])
 			elif _spaceAssetsIndex == 6:
 				_spaceTextureColorRamp.offsets = [0.80, 1]
 				# IGNORE: Debug
-				print("Adjusted a space star texture! ", spaceArray[1][_spaceTextureGenerationIteration], "\n")
+				print("Adjusted a space star texture! ", spaceArray[1][_spaceTextureGenerationIteration])
 		# Increase index by 1 to determine what type of adjustments to add in the textures.
+		# IGNORE: Debug
+		print("Iteration complete! Incrementing. \n")
 		_spaceAssetsIndex += 1
 	
 	# IGNORE: Debug
