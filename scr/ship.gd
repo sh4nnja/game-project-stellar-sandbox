@@ -46,7 +46,6 @@ func changeShipColor(doRandomColor: bool, shipColorArray: Array) -> void:
 
 # Manages ship movement throughout the space.
 func _manageShipMovement(gDelta: float) -> void:
-	
 	# Make the ship look at the mouse position.
 	var shipRotation: float = (get_global_mouse_position() - global_position).angle()
 	rotation = lerp_angle(rotation, shipRotation, gDelta * 3)

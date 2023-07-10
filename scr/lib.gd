@@ -17,6 +17,8 @@ var spaceMaximumSpawnSeed: int = 9223372036854775807
 var spaceGasesMinimumColorValue: float = 0.01
 var spaceGasesMaximumColorValue: float = 1.00
 var spaceGasesColorOpacity: float = 0.5
+
+var spaceSectorEncryptionKey: int = 42
 #------------------------------------------------------------------------------#
 # GLOBAL OBJECTS
 #------------------------------------------------------------------------------#
@@ -25,11 +27,43 @@ var spaceGasesColorOpacity: float = 0.5
 # GLOBAL INITIATION 
 #------------------------------------------------------------------------------#
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------#
 # GLOBAL GENERATORS 
 #------------------------------------------------------------------------------#
 # Generating random numbers. 
-func generateRandomNumber(minVal: float, maxVal: float, type: String, includeNegatives: bool):
+func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = false):
 	# "minVal" for lowest value.
 	# "maxVal" for highest value.
 	# "type" for type of datatype; self-explanatory.
@@ -52,26 +86,27 @@ func generateRandomNumber(minVal: float, maxVal: float, type: String, includeNeg
 func generateRandomVector2(minVal: float, maxVal: float, type: String, includeNegatives: bool) -> Vector2:
 	var output: Vector2 = Vector2()
 	var returnOutput: float
-	returnOutput = lib.generateRandomNumber(minVal, maxVal, type, includeNegatives)
+	returnOutput = generateRandomNumber(minVal, maxVal, type, includeNegatives)
 	output = Vector2(returnOutput, returnOutput)
 	return output
 
 # Generator Vector2 values with different x, y values.
 func generateRandomSeparateVector2(minVal: float, maxVal: float, type: String, includeNegatives: bool) -> Vector2:
 	var output: Vector2 = Vector2()
-	output.x = lib.generateRandomNumber(minVal, maxVal, type, includeNegatives)
-	output.y = lib.generateRandomNumber(minVal, maxVal, type, includeNegatives)
+	output.x = generateRandomNumber(minVal, maxVal, type, includeNegatives)
+	output.y = generateRandomNumber(minVal, maxVal, type, includeNegatives)
 	return output
 
 # Generator Color values with opacity manipulation "opacity". Maximum value, "1.0".
-func generateRandomColor(minVal: float, maxVal: float, opacity: float = spaceGasesColorOpacity) -> Color:
+func generateRandomColor(minVal: float = spaceGasesMinimumColorValue, maxVal: float = spaceGasesMaximumColorValue, opacity: float = spaceGasesColorOpacity) -> String:
 	var color: Color = Color(
-	lib.generateRandomNumber(minVal, maxVal, "float",  false), 
-	lib.generateRandomNumber(minVal, maxVal, "float", false), 
-	lib.generateRandomNumber(minVal, maxVal, "float",  false),
-	opacity
+		generateRandomNumber(minVal, maxVal, "float",  false), 
+		generateRandomNumber(minVal, maxVal, "float", false), 
+		generateRandomNumber(minVal, maxVal, "float",  false),
+		opacity
 	)
-	return color 
+	var colorHtml: String = color.to_html(true)
+	return colorHtml
 
 #------------------------------------------------------------------------------#
 # GLOBAL TOOLS 
