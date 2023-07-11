@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bih5luxeqykid"]
+[gd_scene load_steps=2 format=3 uid="uid://bih5luxeqykid"]
 
 [ext_resource type="PackedScene" uid="uid://dp51oah6gmomd" path="res://pck/space/spaceSectorManager.tscn" id="1_grwy1"]
-[ext_resource type="PackedScene" uid="uid://6vj0l6kel1vx" path="res://pck/ships/ship.tscn" id="2_s2kfx"]
 
 [node name="spaceGameProper" type="Node2D"]
 
 [node name="spaceSectorManager" parent="." instance=ExtResource("1_grwy1")]
-
-[node name="ship" parent="." instance=ExtResource("2_s2kfx")]

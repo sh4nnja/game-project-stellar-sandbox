@@ -13,6 +13,9 @@ config_version=5
 config/name="Stellar Sandbox"
 run/main_scene="res://scn/scnManager.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
+boot_splash/bg_color=Color(0.0196078, 0.0196078, 0.0196078, 1)
+boot_splash/show_image=false
+boot_splash/fullsize=false
 boot_splash/use_filter=false
 
 [autoload]
@@ -28,6 +31,7 @@ window/size/window_width_override=1152
 window/size/window_height_override=648
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/vsync/vsync_mode=2
 
 [input]
 
@@ -41,6 +45,10 @@ fwd={
 
 limits/multithreaded_server/rid_pool_prealloc=144
 
+[network]
+
+limits/debugger/max_chars_per_second=2147483647
+
 [physics]
 
 2d/run_on_separate_thread=true
@@ -49,9 +57,6 @@ limits/multithreaded_server/rid_pool_prealloc=144
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="mobile"
-driver/threads/thread_model=2
 textures/lossless_compression/force_png=true
 textures/default_filters/use_nearest_mipmap_filter=true
 textures/default_filters/anisotropic_filtering_level=0
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)

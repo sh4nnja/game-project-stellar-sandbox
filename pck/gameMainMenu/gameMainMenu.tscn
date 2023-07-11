@@ -1,0 +1,218 @@
+[gd_scene load_steps=8 format=3 uid="uid://dmgytt1i8mpko"]
+
+[ext_resource type="Script" path="res://scr/gameMainMenu.gd" id="1_u50fn"]
+[ext_resource type="AudioStream" uid="uid://dlqyhvknmno45" path="res://aud/bgm/cathedralAmbience-fesliyanStudios.mp3" id="2_0wuf1"]
+[ext_resource type="Texture2D" uid="uid://bxob6lbcb0hdo" path="res://png/logo/f.png" id="2_iud70"]
+[ext_resource type="Texture2D" uid="uid://cyw3ov7f438lf" path="res://png/logo/PS Logo.png" id="3_0ye34"]
+
+[sub_resource type="Animation" id="Animation_31sw0"]
+resource_name = "uiLogoShowcaseAnimation"
+length = 15.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup/uiGodotIcon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 5, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup/uiPentannexIcon:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(9, 10, 14.1, 15),
+"transitions": PackedFloat32Array(1, 1, 0.1, 0.1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_montageOnGameScreen"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiOverlay:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 14, 15),
+"transitions": PackedFloat32Array(1, 0.1, 0.1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiBackgroundMusicPlayer:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_h3ajy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup/uiGodotIcon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup/uiPentannexIcon:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiOverlay:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("userInterfaceMenuLayer/userInterfaceMenu/uiBackgroundMusicPlayer:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_taetd"]
+_data = {
+"RESET": SubResource("Animation_h3ajy"),
+"uiLogoShowcaseAnimation": SubResource("Animation_31sw0")
+}
+
+[node name="gameMainMenu" type="Node2D"]
+script = ExtResource("1_u50fn")
+
+[node name="gameCamera" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="userInterfaceMenuLayer" type="CanvasLayer" parent="."]
+
+[node name="userInterfaceMenu" type="Control" parent="userInterfaceMenuLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="uiBackgroundMusicPlayer" type="AudioStreamPlayer" parent="userInterfaceMenuLayer/userInterfaceMenu"]
+stream = ExtResource("2_0wuf1")
+mix_target = 1
+
+[node name="uiOverlay" type="ColorRect" parent="userInterfaceMenuLayer/userInterfaceMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+
+[node name="uiLogoGroup" type="Control" parent="userInterfaceMenuLayer/userInterfaceMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="uiLogoAnimation" type="AnimationPlayer" parent="userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup"]
+root_node = NodePath("../../../..")
+autoplay = "uiLogoShowcaseAnimation"
+playback_process_mode = 0
+libraries = {
+"": SubResource("AnimationLibrary_taetd")
+}
+
+[node name="uiGodotIcon" type="TextureRect" parent="userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 6
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.29
+anchor_top = 0.375
+anchor_right = 0.69
+anchor_bottom = 0.625
+offset_left = -0.800049
+offset_top = -0.498016
+offset_right = -0.800049
+offset_bottom = 0.498535
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(384, 135)
+texture = ExtResource("2_iud70")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="uiPentannexIcon" type="TextureRect" parent="userInterfaceMenuLayer/userInterfaceMenu/uiLogoGroup"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 6
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.433
+anchor_top = 0.356
+anchor_right = 0.567
+anchor_bottom = 0.658
+offset_left = 0.639954
+offset_top = -0.480011
+offset_right = -0.640015
+offset_bottom = 0.359924
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(128, 163)
+texture = ExtResource("3_0ye34")
+expand_mode = 5
+stretch_mode = 5
+
+[connection signal="_montage" from="." to="." method="_montageOnGameScreen"]

@@ -39,7 +39,7 @@ func _initiateSpaceSector() -> void:
 	
 		# Create 3 colors for clouds with a loop.
 		for _spaceSectorGasesIteration in range(3):
-			if lib.generateRandomNumber(0, 1) == 1:
+			if lib.generateRandomNumber(0, 5) != 1:
 				_spaceSectorGases.append(lib.generateRandomColor())
 			else:
 				_spaceSectorGases.append("00000000")
@@ -49,7 +49,7 @@ func _initiateSpaceSector() -> void:
 	
 	else:
 		# Assign chunks of the preset number to the parameters. 
-		var spaceSectorKey: String = "[|-1421538792342290432|e874a580|b5321d80|b2cf5380|3ccb9980|2|]"
+		var spaceSectorKey: String = "[|9011575311019540480|154e2080|00000000|71f7ed80|f7478380|1|]"
 		_spaceSectorSeed = int(spaceSectorKey.get_slice("|", 1))
 		_spaceSectorBackground = (spaceSectorKey.get_slice("|", 2))
 		_spaceSectorGases.append(spaceSectorKey.get_slice("|", 3))
@@ -59,12 +59,16 @@ func _initiateSpaceSector() -> void:
 	
 	# Wait for the scene to be created.
 	await get_tree().create_timer(1).timeout
-	# Proceed to generation of space.
-	_spaceBackgroundGenerator.initiateThreadForLoading([[_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena]])
+	# Proceed to generation of space phenomena.
+	_spacePhenomenaGenerator.initiateThreadForLoading([_spaceSectorSeed, _spaceSectorGases[0], _spaceSectorPhenomena])
+	# IGNORE: Debug
+	print("Started space generation.")
 	
 	# Wait for the scene to be created.
 	await get_tree().create_timer(1).timeout
-	# Proceed to generation of space phenomena.
-	_spacePhenomenaGenerator.initiateThreadForLoading([_spaceSectorSeed, _spaceSectorGases[0], _spaceSectorPhenomena])
+	# Proceed to generation of space.
+	_spaceBackgroundGenerator.initiateThreadForLoading([[_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena]])
+	# IGNORE: Debug
+	print("Started space phenomena generation.")
 
 #------------------------------------------------------------------------------#
