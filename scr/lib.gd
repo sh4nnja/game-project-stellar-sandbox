@@ -83,7 +83,7 @@ func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", in
 	return output
 
 # Generator Vector2 values with same x, y values.
-func generateRandomVector2(minVal: float, maxVal: float, type: String, includeNegatives: bool) -> Vector2:
+func generateRandomVector2(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = false) -> Vector2:
 	var output: Vector2 = Vector2()
 	var returnOutput: float
 	returnOutput = generateRandomNumber(minVal, maxVal, type, includeNegatives)
@@ -91,7 +91,7 @@ func generateRandomVector2(minVal: float, maxVal: float, type: String, includeNe
 	return output
 
 # Generator Vector2 values with different x, y values.
-func generateRandomSeparateVector2(minVal: float, maxVal: float, type: String, includeNegatives: bool) -> Vector2:
+func generateRandomSeparateVector2(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = true) -> Vector2:
 	var output: Vector2 = Vector2()
 	output.x = generateRandomNumber(minVal, maxVal, type, includeNegatives)
 	output.y = generateRandomNumber(minVal, maxVal, type, includeNegatives)
