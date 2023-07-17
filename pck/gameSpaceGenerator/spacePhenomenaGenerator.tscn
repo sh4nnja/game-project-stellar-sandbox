@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ndsnl58qknvl"]
+
+[ext_resource type="Script" path="res://scr/spacePhenomenaGenerator.gd" id="1_k058o"]
+
+[node name="spacePhenomenaGenerator" type="Node2D"]
+script = ExtResource("1_k058o")
+
+[node name="spaceParallaxEffectManager" type="ParallaxBackground" parent="."]
+layer = 0
+
+[node name="spacePTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="spacePhenomenaTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spacePTParallax"]

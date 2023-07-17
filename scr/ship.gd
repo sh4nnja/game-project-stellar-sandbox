@@ -8,6 +8,8 @@ extends CharacterBody2D
 @onready var shipTrailInner: Line2D = get_node("shipTrails/shipTrailInside")
 @onready var shipTrailOuter: Line2D = get_node("shipTrails/shipTrailOutside")
 
+@onready var shipCamera: Camera2D = get_node("shipCamera")
+
 var shipTrailCurve: Curve2D = Curve2D.new()
 #------------------------------------------------------------------------------#
 var shipParts: Array = [bodySprite, thrusterSprite, cockpitSprite]
@@ -24,6 +26,13 @@ var trailLength: int = 10
 
 
 #------------------------------------------------------------------------------#
+func _ready() -> void:
+	# Limit camera.
+	shipCamera.limit_top = -lib.spaceSectorSize / 2
+	shipCamera.limit_bottom = lib.spaceSectorSize / 2
+	shipCamera.limit_left = -lib.spaceSectorSize / 2
+	shipCamera.limit_right = lib.spaceSectorSize / 2
+
 func _input(_event):
 	# Moves the ship when left mouse button is pressed.
 	canMove = true if Input.is_action_pressed("fwd") else false

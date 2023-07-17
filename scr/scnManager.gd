@@ -1,6 +1,6 @@
 extends Node
 
-var _spaceGameProperPath: String = "res://pck/space/spaceGameProper.tscn"
+var _spaceGameProperPath: String = "res://pck/gameSpaceGenerator/spaceGameProper.tscn"
 var _userInterfaceMainMenuPath: String = "res://pck/gameMainMenu/gameMainMenu.tscn"
 #------------------------------------------------------------------------------#
 
