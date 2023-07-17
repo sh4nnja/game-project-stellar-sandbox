@@ -2,6 +2,13 @@ extends Node2D
 #------------------------------------------------------------------------------#
 @onready var _starParticles: CPUParticles2D = get_node("spaceParallaxEffectManager/spaceST1Parallax/spaceStarParticles")
 
+var _spaceBackgroundTexture: NoiseTexture2D 
+var _spaceGasesTexture: NoiseTexture2D
+var _spaceGases1Texture: NoiseTexture2D
+var _spaceGases2Texture: NoiseTexture2D
+var _spaceStarsTexture: NoiseTexture2D
+var _spaceStars1Texture: NoiseTexture2D
+
 #------------------------------------------------------------------------------#
 var _spaceGenerationThread: Thread
 
@@ -48,12 +55,12 @@ func initiateThreadForLoading(spaceArray: Array) -> void:
 	print("Thread ", _spaceGenerationThread, " has been created!\n")
 	
 	# Initiation of textures. Loading the texture will be done in the thread.
-	var _spaceBackgroundTexture: NoiseTexture2D = NoiseTexture2D.new()
-	var _spaceGasesTexture: NoiseTexture2D = NoiseTexture2D.new()
-	var _spaceGases1Texture: NoiseTexture2D = NoiseTexture2D.new()
-	var _spaceGases2Texture: NoiseTexture2D = NoiseTexture2D.new()
-	var _spaceStarsTexture: NoiseTexture2D = NoiseTexture2D.new()
-	var _spaceStars1Texture: NoiseTexture2D = NoiseTexture2D.new()
+	_spaceBackgroundTexture = NoiseTexture2D.new()
+	_spaceGasesTexture = NoiseTexture2D.new()
+	_spaceGases1Texture = NoiseTexture2D.new()
+	_spaceGases2Texture = NoiseTexture2D.new()
+	_spaceStarsTexture = NoiseTexture2D.new()
+	_spaceStars1Texture = NoiseTexture2D.new()
 	
 	get_node("spaceParallaxEffectManager/spaceBGTParallax/spaceBackgroundTexture").texture = _spaceBackgroundTexture
 	get_node("spaceParallaxEffectManager/spaceGTParallax/spaceGasesTexture").texture = _spaceGasesTexture
@@ -83,9 +90,8 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 	# Loop basic information to the textures.
 	for _spaceTextureGenerationIteration in range(6):
 		# Creating the default configuration of the textures.
-		spaceArray[1][_spaceTextureGenerationIteration].width = 4096
-		spaceArray[1][_spaceTextureGenerationIteration].height = 4096
-		spaceArray[1][_spaceTextureGenerationIteration].generate_mipmaps = false
+		spaceArray[1][_spaceTextureGenerationIteration].width = lib.spaceSectorSize
+		spaceArray[1][_spaceTextureGenerationIteration].height = lib.spaceSectorSize
 		# IGNORE: Debug
 		print("    Generated a space texture! ", spaceArray[1][_spaceTextureGenerationIteration])
 		
@@ -152,10 +158,36 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 		# IGNORE: Debug
 		print("    Iteration complete! Incrementing. \n")
 		_spaceAssetsIndex += 1
+		# Removes objects from variable so when set the main texture to null, they will also be changed to null.
+		_spaceTextureNoise = null
+		_spaceTextureColorRamp = null
 	
 	# IGNORE: Debug
 	print("Loaded space sector! Visually adjusting now. Thread ", _spaceGenerationThread, " will be terminated.")
 	print("Generated Space Sector Key (SSK): ", _spaceSectorKey.format(spaceArray[0]))
 	print("#------------------------------------------------------------------------------#")
+	_spaceGenerationThread = null
+	_spaceAssetsIndex = 1
+
+# Reverting textures first in the nodes before generating another.
+# IMPORTANT CODE: This is a must do due to space sector generation mechanic on menu.
+func revertSpaceTexturesToDefault() -> void:
+	# IGNORE: Debug
+	print("Texture of nodes has been cleared.")
+	_spaceBackgroundTexture = null
+	_spaceGasesTexture = null
+	_spaceGases1Texture = null
+	_spaceGases2Texture = null
+	_spaceStarsTexture = null
+	_spaceStars1Texture = null
+	get_node("spaceParallaxEffectManager/spaceBGTParallax/spaceBackgroundTexture").texture = null
+	get_node("spaceParallaxEffectManager/spaceGTParallax/spaceGasesTexture").texture = null
+	get_node("spaceParallaxEffectManager/spaceGT1Parallax/spaceGasesTexture1").texture = null
+	get_node("spaceParallaxEffectManager/spaceGT2Parallax/spaceGasesTexture2").texture = null
+	get_node("spaceParallaxEffectManager/spaceSTParallax/spaceStarTexture").texture = null
+	get_node("spaceParallaxEffectManager/spaceST1Parallax/spaceStarTexture1").texture = null
+	get_node("spaceParallaxEffectManager/spaceGTParallax/spaceGasesTexture").modulate = Color(1, 1, 1, 1)
+	get_node("spaceParallaxEffectManager/spaceGT1Parallax/spaceGasesTexture1").modulate = Color(1, 1, 1, 1)
+	get_node("spaceParallaxEffectManager/spaceGT2Parallax/spaceGasesTexture2").modulate = Color(1, 1, 1, 1)
 
 #------------------------------------------------------------------------------#

@@ -13,15 +13,38 @@ extends Node
 #------------------------------------------------------------------------------#
 var spaceMinimumSpawnSeed: int = -9223372036854775807
 var spaceMaximumSpawnSeed: int = 9223372036854775807
-
+var spaceSectorSize = 1080
 var spaceGasesMinimumColorValue: float = 0.01
 var spaceGasesMaximumColorValue: float = 1.00
 var spaceGasesColorOpacity: float = 0.5
 
-var spaceSectorEncryptionKey: int = 42
+var userInterfaceQuotes: PackedStringArray = [
+	"Within the cosmic expanse, remember that you are a universe unto yourself, filled with infinite possibilities waiting to be explored.",
+	"Like a star illuminating the night sky, let your inner light shine brightly and guide you on your unique journey through life.",
+	"In the vastness of space, know that your presence matters, for you are a vital piece in the intricate cosmic puzzle.",
+	"Just as the moon reflects the sun's radiance, may you reflect the beauty and brilliance within you to inspire others in their own cosmic odyssey.",
+	"When you look up at the stars, remember that you too are made of stardust, carrying the cosmic magic within your very being.",
+	"Amidst the boundless universe, your dreams and aspirations are the guiding constellations that will lead you to your true destiny.",
+	"Like a comet streaking across the night sky, may your life be filled with moments of awe-inspiring wonder and transformative experiences.",
+	"The cosmic tapestry weaves your story into the grand narrative of the universe, reminding you that your journey is both unique and meaningful.",
+	"When you feel lost, remember that you are an intrepid explorer of the cosmos, destined to discover your own path amidst the stars.",
+	"Embrace the cosmic symphony within your soul, for you are an instrument of harmony and purpose in the grand orchestra of life.",
+	"In the grand cosmos, remember that you are a precious creation, deserving of love, happiness, and the pursuit of your dreams.",
+	"Just as stars twinkle in the night sky, let your brilliance shine forth and illuminate the world with the unique gifts you possess.",
+	"You are a celestial marvel, a rare gem amidst the vastness of space. Embrace your uniqueness and let it guide you to greatness.",
+	"Like a comet leaving a dazzling trail, strive to leave your mark on the universe with every endeavor, knowing that your efforts are meaningful and significant.",
+	"Within you lies an entire galaxy of untapped potential. Harness the power of your dreams and reach for the stars, for you are capable of extraordinary achievements.",
+	"In the cosmic dance of life, remember that you are the lead, choreographing your own steps with purpose, passion, and unwavering determination.",
+	"You are a cosmic architect, capable of shaping your own destiny. Build a life that aligns with your truest desires and aspirations.",
+	"Like the planets in perfect alignment, trust in the divine order of the universe and have faith in your ability to overcome challenges and manifest your highest aspirations.",
+	"As you navigate the vast cosmic ocean of possibilities, remember that every decision you make has the power to shape your reality. Choose wisely and strive for excellence.",
+	"In the tapestry of existence, you are an essential thread woven with care and intention. Embrace your worth and always give your best, for the universe celebrates your every effort."
+] 
+
 #------------------------------------------------------------------------------#
 # GLOBAL OBJECTS
 #------------------------------------------------------------------------------#
+var rng: Object = RandomNumberGenerator.new()
 
 #------------------------------------------------------------------------------#
 # GLOBAL INITIATION 
@@ -70,7 +93,6 @@ func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", in
 		# "randomInt" for random whole number without minimum and maximum values.
 		# "randomFloat" for random decimal number without minimum and maximum value. Snapped to hundredths (0.01).
 	# "includeNegatives" for including negative numbers in generation.
-	var rng: Object = RandomNumberGenerator.new()
 	rng.randomize()
 	var output
 	if includeNegatives: output = rng.randf_range(minVal, maxVal) * (rng.randi() % 2 * 2 - 1)

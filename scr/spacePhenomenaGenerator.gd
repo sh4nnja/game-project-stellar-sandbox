@@ -1,6 +1,9 @@
 extends Node2D
 
 #------------------------------------------------------------------------------#
+var _spaceTexturePhenomena: NoiseTexture2D
+
+#------------------------------------------------------------------------------#
 var _spacePhenomenonGenerationThread: Thread
 
 #------------------------------------------------------------------------------#
@@ -18,7 +21,7 @@ func initiateThreadForLoading(spacePhenomena: Array) -> void:
 	print("Thread ", _spacePhenomenonGenerationThread, " has been created!\n")
 	
 	# Initiation of textures. Loading the texture will be done in the thread.
-	var _spaceTexturePhenomena: NoiseTexture2D = NoiseTexture2D.new()
+	_spaceTexturePhenomena = NoiseTexture2D.new()
 	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").modulate = spacePhenomena[1]
 	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").texture = _spaceTexturePhenomena
 	spacePhenomena.append(_spaceTexturePhenomena)
@@ -36,8 +39,8 @@ func _initiateSceneLoadingInThread(_spacePhenomena: Array) -> void:
 	print("\nThread function initiated!\n")
 	
 	# Creating the default configuration of the texture.
-	_spacePhenomena[3].width = 4096
-	_spacePhenomena[3].height = 4096
+	_spacePhenomena[3].width = lib.spaceSectorSize
+	_spacePhenomena[3].height = lib.spaceSectorSize
 	# IGNORE: Debug
 	print("Configured the texture size! ", _spacePhenomena[3])
 	
@@ -75,7 +78,7 @@ func _initiateSceneLoadingInThread(_spacePhenomena: Array) -> void:
 				Color(lib.generateRandomColor(lib.spaceGasesMinimumColorValue, lib.spaceGasesMaximumColorValue, 1)),
 				Color.TRANSPARENT
 				]
-			_spacePhenomenaTextureNoise.noise_type = FastNoiseLite.TYPE_PERLIN
+			_spacePhenomenaTextureNoise.noise_type = FastNoiseLite.TYPE_PERLIN 
 			_spacePhenomenaTextureNoise.frequency = 0.005
 			_spacePhenomenaTextureNoise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
 			# IGNORE: Debug
@@ -84,8 +87,21 @@ func _initiateSceneLoadingInThread(_spacePhenomena: Array) -> void:
 	# Assign the generated ramp and noise into the texture and to the node.
 	_spacePhenomena[3].color_ramp = _spacePhenomenaTextureColorRamp
 	_spacePhenomena[3].noise = _spacePhenomenaTextureNoise
+	
+	# Removes objects from variable so when set the main texture to null, they will also be changed to null.
+	_spacePhenomenaTextureColorRamp = null
+	_spacePhenomenaTextureNoise = null
+	
 	# IGNORE: Debug
 	print("Loaded space phenomena texture! Visually adjusting now. Thread ", _spacePhenomenonGenerationThread, " will be terminated.")
 	print("#------------------------------------------------------------------------------#")
+	_spacePhenomenonGenerationThread = null
 
+# Removing textures first in the nodes before generating another.
+# IMPORTANT CODE: This is a must do due to space sector generation mechanic on menu.
+func revertSpacePhenomenaTexturesToDefault() -> void:
+	# IGNORE: Debug
+	print("Texture of nodes has been cleared.")
+	_spaceTexturePhenomena = null
+	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").texture = null
 #------------------------------------------------------------------------------#

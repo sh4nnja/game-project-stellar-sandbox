@@ -5,7 +5,7 @@ extends Node2D
 #@onready var _spaceEnvironment: WorldEnvironment = get_node("spaceEnvironment")
 
 #------------------------------------------------------------------------------#
-var _spaceSectorRandomGeneration: bool = true
+var _spaceSectorRandomGeneration: bool = false
 
 var _spaceSectorSeed: int
 var _spaceSectorBackground: String
@@ -48,8 +48,9 @@ func _initiateSpaceSector() -> void:
 		_spaceSectorPhenomena = lib.generateRandomNumber(1, 2) 
 	
 	else:
+		_spaceSectorRandomGeneration = true
 		# Assign chunks of the preset number to the parameters. 
-		var spaceSectorKey: String = "[|9011575311019540480|154e2080|00000000|71f7ed80|f7478380|1|]"
+		var spaceSectorKey: String = "[|179645356571623424|ce624280|ee308280|00000000|356cfd80|2|]"
 		_spaceSectorSeed = int(spaceSectorKey.get_slice("|", 1))
 		_spaceSectorBackground = (spaceSectorKey.get_slice("|", 2))
 		_spaceSectorGases.append(spaceSectorKey.get_slice("|", 3))
@@ -58,17 +59,26 @@ func _initiateSpaceSector() -> void:
 		_spaceSectorPhenomena = int(spaceSectorKey.get_slice("|", 6))
 	
 	# Wait for the scene to be created.
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.05).timeout
 	# Proceed to generation of space phenomena.
 	_spacePhenomenaGenerator.initiateThreadForLoading([_spaceSectorSeed, _spaceSectorGases[0], _spaceSectorPhenomena])
 	# IGNORE: Debug
 	print("Started space generation.")
 	
 	# Wait for the scene to be created.
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.05).timeout
 	# Proceed to generation of space.
 	_spaceBackgroundGenerator.initiateThreadForLoading([[_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena]])
 	# IGNORE: Debug
 	print("Started space phenomena generation.")
+
+# Reverts textures to default. Clearing memory for new generation.
+func revertTexturesOfSpaceTextures() -> void:
+	_spaceSectorGases.clear()
+	_spaceBackgroundGenerator.revertSpaceTexturesToDefault()
+	_spacePhenomenaGenerator.revertSpacePhenomenaTexturesToDefault()
+	# Wait for the scene to be adjusted.
+	await get_tree().create_timer(0.05).timeout
+	_initiateSpaceSector()
 
 #------------------------------------------------------------------------------#

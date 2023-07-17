@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://ipqn6c3kseo2"]
+
+[ext_resource type="Script" path="res://scr/spaceBackgroundGenerator.gd" id="1_yb6n2"]
+[ext_resource type="Texture2D" uid="uid://ddntvfhfjauqj" path="res://png/star/star2.png" id="2_ouwmk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nnm2l"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_b0ilk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.531579, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="spaceBackgroundGenerator" type="Node2D"]
+process_priority = 1
+script = ExtResource("1_yb6n2")
+
+[node name="spaceParallaxEffectManager" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="spaceBGTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="spaceBackgroundTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spaceBGTParallax"]
+modulate = Color(0.101961, 0, 0.101961, 1)
+
+[node name="spaceGTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="spaceGasesTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spaceGTParallax"]
+modulate = Color(0.384314, 0, 0.352941, 1)
+
+[node name="spaceGT1Parallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="spaceGasesTexture1" type="Sprite2D" parent="spaceParallaxEffectManager/spaceGT1Parallax"]
+modulate = Color(0.211765, 0.109804, 0.478431, 0.47451)
+
+[node name="spaceGT2Parallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.6, 0.6)
+
+[node name="spaceGasesTexture2" type="Sprite2D" parent="spaceParallaxEffectManager/spaceGT2Parallax"]
+modulate = Color(0.639216, 1, 1, 0.47451)
+
+[node name="spaceSTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.9, 0.9)
+
+[node name="spaceStarTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spaceSTParallax"]
+
+[node name="spaceST1Parallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+motion_scale = Vector2(0.15, 0.15)
+
+[node name="spaceStarTexture1" type="Sprite2D" parent="spaceParallaxEffectManager/spaceST1Parallax"]
+
+[node name="spaceStarParticles" type="CPUParticles2D" parent="spaceParallaxEffectManager/spaceST1Parallax"]
+material = SubResource("CanvasItemMaterial_nnm2l")
+amount = 4096
+lifetime = 600.0
+randomness = 1.0
+lifetime_randomness = 1.0
+fixed_fps = 60
+local_coords = true
+draw_order = 1
+texture = ExtResource("2_ouwmk")
+emission_shape = 3
+emission_rect_extents = Vector2(1080, 1080)
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.01
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_b0ilk")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
