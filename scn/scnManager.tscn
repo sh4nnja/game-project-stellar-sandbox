@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7uqa1ih5o1jw"]
-
-[ext_resource type="Script" path="res://scr/scnManager.gd" id="1_ln0yy"]
-
-[node name="scnManager" type="Node"]
-script = ExtResource("1_ln0yy")
