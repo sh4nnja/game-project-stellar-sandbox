@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bih5luxeqykid"]
-
-[ext_resource type="PackedScene" uid="uid://dp51oah6gmomd" path="res://pck/space/spaceSectorManager.tscn" id="1_grwy1"]
-
-[node name="spaceGameProper" type="Node2D"]
-
-[node name="spaceSectorManager" parent="." instance=ExtResource("1_grwy1")]
