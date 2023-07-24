@@ -1,0 +1,165 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv38r65el0wun"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x182q"]
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 128
+corner_radius_top_right = 128
+corner_radius_bottom_right = 128
+corner_radius_bottom_left = 128
+corner_detail = 10
+
+[sub_resource type="Animation" id="Animation_fpnvt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_styles/panel:border_width_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:border_width_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_styles/panel:border_width_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:theme_override_styles/panel:border_width_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_of4vj"]
+resource_name = "uiLoadingAnimation"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_styles/panel:border_width_left")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.85),
+"update": 0,
+"values": [80, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_styles/panel:border_width_top")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.85),
+"update": 0,
+"values": [80, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:theme_override_styles/panel:border_width_right")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.85),
+"update": 0,
+"values": [80, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:theme_override_styles/panel:border_width_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.85),
+"update": 0,
+"values": [80, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.25, 0.25),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vw8ag"]
+_data = {
+"RESET": SubResource("Animation_fpnvt"),
+"uiLoadingAnimation": SubResource("Animation_of4vj")
+}
+
+[node name="uiMenuLoading" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="uiMenuLocateSectorSFX" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 56.0
+pivot_offset = Vector2(24, 24)
+theme_override_styles/panel = SubResource("StyleBoxFlat_x182q")
+
+[node name="uiAnimation" type="AnimationPlayer" parent="uiMenuLocateSectorSFX"]
+autoplay = "uiLoadingAnimation"
+libraries = {
+"": SubResource("AnimationLibrary_vw8ag")
+}
