@@ -168,7 +168,7 @@ bg_color = Color(1, 1, 1, 0.0784314)
 border_color = Color(1, 1, 1, 0.196078)
 corner_detail = 1
 
-[node name="uiInputSSK" type="LineEdit"]
+[node name="uiInputSSK" type="LineEdit" groups=["SSKInput"]]
 offset_top = 35.0
 offset_right = 512.0
 offset_bottom = 83.0
@@ -178,7 +178,6 @@ theme_override_fonts/font = ExtResource("1_1bhsh")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4qyjl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_aj1l6")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_4d3c8")
-placeholder_text = "[|-1421538792342290432|e874a580|b5321d80|b2cf5380|3ccb9980|2|]"
 alignment = 1
 max_length = 62
 context_menu_enabled = false
@@ -241,8 +240,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_786sr")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_itq1c")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_a62pk")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bnlyt")
-disabled = true
-text = "Locate Sector"
+text = "Retrieve Key"
 flat = true
 
 [node name="uiInputSSKLocatePanel" type="Panel" parent="uiInputSSKLocate"]

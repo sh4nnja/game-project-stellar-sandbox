@@ -12,8 +12,6 @@ var _spaceStars1Texture: NoiseTexture2D
 #------------------------------------------------------------------------------#
 var _spaceGenerationThread: Thread
 
-var _spaceSectorKey: String = "[|{0}|{1}|{2}|{3}|{4}|{5}|]"
-
 # Initiation of textures.
 var _spaceAssetsIndex: int = 1
 
@@ -170,10 +168,8 @@ func _initiateSceneLoadingInThread(spaceArray: Array) -> void:
 	
 	# IGNORE: Debug
 	print("Loaded space sector! Visually adjusting now. Thread ", _spaceGenerationThread, " will be terminated.")
-	print("Generated Space Sector Key (SSK): ", _spaceSectorKey.format(spaceArray[0]))
 	print("#------------------------------------------------------------------------------#")
 	_spaceAssetsIndex = 1
-	lib.SSK = _spaceSectorKey
 
 # Reverting textures first in the nodes before generating another.
 # IMPORTANT CODE: This is a must do due to space sector generation mechanic on menu.
