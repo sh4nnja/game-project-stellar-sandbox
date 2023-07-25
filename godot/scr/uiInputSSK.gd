@@ -11,8 +11,12 @@ signal locatingSpaceSector
 #------------------------------------------------------------------------------#
 var _uiInputSKKOnFocus: bool = false
 var _uiInputSKKOnHover: bool = false
+var _uiInputSSKLocateMode: bool = true
 
 #------------------------------------------------------------------------------#
+func _ready() -> void:
+	placeholder_text = lib.SSK
+
 # Emits when the textBox is selected.
 func _gui_input(event) -> void:
 	if event is InputEventMouseButton:
@@ -114,18 +118,24 @@ func _whenLocateBtnMouseExited():
 		_uiInputSSKAnimation.play_backwards("uiInputSSKLocateHovered")
 
 func _whenUIInputSSKLocatePressed():
-	locatingSpaceSector.emit()
-	await _uiInputSSKAnimation.animation_finished
-	_uiInputSSKAnimation.play_backwards("uiInputSSKHovered")
-	text = ""
-	_whenTextChanged(text)
+	if !_uiInputSSKLocateMode:
+		# If there's valid text in SSK Input, this will fire.
+		locatingSpaceSector.emit()
+		await _uiInputSSKAnimation.animation_finished
+		_uiInputSSKAnimation.play_backwards("uiInputSSKHovered")
+		text = ""
+		_whenTextChanged(text)
+	else:
+		# If there's no text in SSK Input, the button will enter copy SSK mode.
+		DisplayServer.clipboard_set(lib.SSK)
+		_uiInputSSKLocateBtn.text = "SSK Copied!"
+		await get_tree().create_timer(1).timeout
+		_uiInputSSKLocateBtn.text = "Retrieve Key"
 
 #------------------------------------------------------------------------------#
 # Fires when user inputs text in the textbox.
 # IMPORTANT CODE: Check SSK for irregularities. Provide random if user agrees.
 func _whenTextChanged(_stringText: String) -> void:
-	# Change placeholder text with the seed.
-	placeholder_text = lib.SSK
 	# Matches UI Color for validity of text.
 	match _checkSSK(_stringText):
 		# Default, " "
@@ -133,23 +143,35 @@ func _whenTextChanged(_stringText: String) -> void:
 			modulate = Color.WHITE
 			_uiInputSSKLocateBtn.disabled = true
 			_uiInputNotice.text = ""
+			# Changes to copy SSK if no text is placed.
+			_uiInputSSKLocateBtn.text = "Retrieve Key"
+			_uiInputSSKLocateMode = true
+			
 		# Invalid SSK
 		1: 
 			modulate = Color.RED
 			_uiInputSSKLocateBtn.disabled = true
 			_uiInputNotice.text = "Invalid SSK. Check for 'key' errors."
+			# Changes to locate SSK if text is placed.
+			_uiInputSSKLocateBtn.text = "Locate Sector"
+			_uiInputSSKLocateMode = false
 		# Valid SSK Format, But presets are error. Will replace them randomly.
 		2: 
 			modulate = Color.AQUA
 			_uiInputSSKLocateBtn.disabled = false
 			_uiInputNotice.text = "Warning! Corrupted SSK. Might affect location protocol."
+			# Changes to locate SSK if text is placed.
+			_uiInputSSKLocateBtn.text = "Locate Sector"
+			_uiInputSSKLocateMode = false
 		# Valid and Accepted SSK Format, no change done.
 		3: 
 			modulate = Color.GREEN
-			_uiInputSSKLocateBtn.disabled = false
 			_uiInputNotice.text = "Valid SSK. Welcome home."
+			# Changes to locate SSK if text is placed.
+			_uiInputSSKLocateBtn.text = "Locate Sector"
+			_uiInputSSKLocateMode = false
 			lib.SSK = _stringText
 
-
-
-
+# Update the placeholder once the sector key has been created.
+func updatePlaceholderText() -> void:
+	placeholder_text = lib.SSK

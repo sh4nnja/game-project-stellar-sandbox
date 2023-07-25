@@ -7,6 +7,7 @@ extends Node2D
 #------------------------------------------------------------------------------#
 var _spaceSectorRandomGeneration: bool = false
 
+var _spaceSectorKey: String = "[|{0}|{1}|{2}|{3}|{4}|{5}|]"
 var _spaceSectorSeed: int
 var _spaceSectorBackground: String
 var _spaceSectorGases: Array = []
@@ -56,6 +57,13 @@ func _initiateSpaceSector() -> void:
 		for _i in range(3):
 			_spaceSectorGases.append(spaceSectorKey.get_slice("|", _i + 3) if spaceSectorKey.get_slice("|", _i + 3).is_valid_html_color() else lib.generateRandomColor())
 		_spaceSectorPhenomena = int(spaceSectorKey.get_slice("|", 6))
+	
+	# IGNORE: Debug
+	print("Generated Space Sector Key (SSK): ", _spaceSectorKey.format([_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena]))
+	
+	# Update SSK Key and send signals to any placeholders.
+	lib.SSK = _spaceSectorKey.format([_spaceSectorSeed, _spaceSectorBackground, _spaceSectorGases[0], _spaceSectorGases[1], _spaceSectorGases[2], _spaceSectorPhenomena])
+	get_tree().call_group("SSKInput", "updatePlaceholderText")
 	
 	# Wait for the scene to be created.
 	await get_tree().create_timer(0.05).timeout
