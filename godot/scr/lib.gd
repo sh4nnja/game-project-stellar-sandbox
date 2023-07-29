@@ -9,7 +9,7 @@
 #------------------------------------------------------------------------------#
 
 # Comments // The comments describes the code BELOW it. Not above it.
-# Comments // Multi-Line isn't supported yet :>
+# Comments // Multi-Line isn't supported yet :> """ is used but only for multi-line strings.
 
 extends Node
 #------------------------------------------------------------------------------#
