@@ -39,7 +39,7 @@ func _input(_event) -> void:
 	canMove = true if Input.is_action_pressed("fwd") else false
 
 func _physics_process(delta) -> void:
-	_manageShipMovement(delta)
+	_manageMovement(delta)
 	_emitTrails()
 
 #------------------------------------------------------------------------------#
@@ -55,9 +55,9 @@ func changeShipColor(doRandomColor: bool, shipColorArray: Array) -> void:
 			shipIndex += 1
 
 # Manages ship movement throughout the space.
-func _manageShipMovement(gDelta: float) -> void:
+func _manageMovement(gDelta: float) -> void:
 	# Make the ship look at the mouse position.
-	var shipRotation: float = (get_global_mouse_position() - global_position).angle()
+	var shipRot: float = (get_global_mouse_position() - global_position).angle()
 	rotation = lerp_angle(rotation, shipRotation, gDelta * 3)
 	
 	# Facilitates movement.

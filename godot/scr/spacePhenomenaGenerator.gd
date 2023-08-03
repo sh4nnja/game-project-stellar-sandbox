@@ -1,106 +1,106 @@
 extends Node2D
 
 #------------------------------------------------------------------------------#
-var _spaceTexturePhenomena: NoiseTexture2D
+var _spacePhenoTex: NoiseTexture2D
 
 #------------------------------------------------------------------------------#
-var _spacePhenomenonGenerationThread: Thread
+var _spacePhenoGenThread: Thread
 
 #------------------------------------------------------------------------------#
 # Kills the thread when scene exits the tree.
 # IMPORTANT CODE: Its a must do to prevent warning and potential crash.
 func _exit_tree():
 	# Deleting Generation Thread.
-	_spacePhenomenonGenerationThread = null
+	_spacePhenoGenThread = null
 
 #------------------------------------------------------------------------------#
 # IMPORTANT CODE: Load a thread for facilitating background loading
-func initiateThreadForLoading(spacePhenomena: Array) -> void:
+func _loadThread(spacePheno: Array) -> void:
 	# IGNORE: Debug
 	print("\nCreating thread for space phenomena texture loading...")
 	# IMPORTANT CODE: Checking if other "spacePhenomenaGenerationThread" are active
-	if is_instance_valid(_spacePhenomenonGenerationThread) and _spacePhenomenonGenerationThread.is_started():
-		_spacePhenomenonGenerationThread.wait_to_finish()
+	if is_instance_valid(_spacePhenoGenThread) and _spacePhenoGenThread.is_started():
+		_spacePhenoGenThread.wait_to_finish()
 	
 	# Create a new thread.
-	_spacePhenomenonGenerationThread = Thread.new()
+	_spacePhenoGenThread = Thread.new()
 	# IGNORE: Debug
-	print("Thread ", _spacePhenomenonGenerationThread, " has been created!\n")
+	print("Thread ", _spacePhenoGenThread, " has been created!\n")
 	
 	# Initiation of textures. Loading the texture will be done in the thread.
-	_spaceTexturePhenomena = NoiseTexture2D.new()
-	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").modulate = spacePhenomena[1]
-	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").texture = _spaceTexturePhenomena
-	spacePhenomena.append(_spaceTexturePhenomena)
+	_spacePhenoTex = NoiseTexture2D.new()
+	get_node("spacePllxMngr/spacePTPllx/spacePhenoTex").modulate = spacePheno[1]
+	get_node("spacePllxMngr/spacePTPllx/spacePhenoTex").texture = _spacePhenoTex
+	spacePheno.append(_spacePhenoTex)
 	# IGNORE: Debug
-	print("Generated a space phenomena texture! ", _spaceTexturePhenomena)
+	print("Generated a space phenomena texture! ", _spacePhenoTex)
 	
 	# Proceed to the thread function
-	_spacePhenomenonGenerationThread.start(_initiateSceneLoadingInThread.bind(spacePhenomena))
+	_spacePhenoGenThread.start(_genSpacePheno.bind(spacePheno))
 	# IGNORE: Debug
 	print("Loading space phenomena textures in the thread...")
 
 # IMPORTANT CODE: Thread Function for background space generation. 
-func _initiateSceneLoadingInThread(_spacePhenomena: Array) -> void:
+func _genSpacePheno(_spacePheno: Array) -> void:
 	# IGNORE: Debug
 	print("\nThread function initiated!\n")
 	
 	# Creating the default configuration of the texture.
-	_spacePhenomena[3].width = lib.spaceSectorSize
-	_spacePhenomena[3].height = lib.spaceSectorSize
+	_spacePheno[3].width = lib.sectSize
+	_spacePheno[3].height = lib.sectSize
 	# IGNORE: Debug
-	print("Configured the texture size! ", _spacePhenomena[3])
+	print("Configured the texture size! ", _spacePheno[3])
 	
 	# Creates a standard color ramp and noise object to assign in the texture.
-	var _spacePhenomenaTextureColorRamp: Gradient = Gradient.new()
-	_spacePhenomenaTextureColorRamp.offsets = [0, 0.5, 1]
-	_spacePhenomenaTextureColorRamp.colors = [Color.TRANSPARENT, Color(1, 1, 1, 0.25), Color.WHITE]
-	_spacePhenomenaTextureColorRamp.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_LINEAR
+	var _spacePhenoTexColorRamp: Gradient = Gradient.new()
+	_spacePhenoTexColorRamp.offsets = [0, 0.5, 1]
+	_spacePhenoTexColorRamp.colors = [Color.TRANSPARENT, Color(1, 1, 1, 0.25), Color.WHITE]
+	_spacePhenoTexColorRamp.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_LINEAR
 	# IGNORE: Debug
-	print("Generated color ramp! ", _spacePhenomenaTextureColorRamp)
+	print("Generated color ramp! ", _spacePhenoTexColorRamp)
 	
-	var _spacePhenomenaTextureNoise: FastNoiseLite = FastNoiseLite.new()
-	_spacePhenomenaTextureNoise.seed = _spacePhenomena[0]
-	_spacePhenomenaTextureNoise.fractal_octaves = 10
+	var _spacePhenoTexNoise: FastNoiseLite = FastNoiseLite.new()
+	_spacePhenoTexNoise.seed = _spacePheno[0]
+	_spacePhenoTexNoise.fractal_octaves = 10
 	# IGNORE: Debug
-	print("Generated noise! ", _spacePhenomenaTextureNoise)
+	print("Generated noise! ", _spacePhenoTexNoise)
 	
 	# Configure the adjustments per texture.
-	match _spacePhenomena[2]:
+	match _spacePheno[2]:
 		1:  # Space phenomenon "HALO" generation.
-			_spacePhenomenaTextureNoise.noise_type = FastNoiseLite.TYPE_PERLIN
-			_spacePhenomenaTextureNoise.frequency = 0.0025
-			_spacePhenomenaTextureNoise.fractal_type = FastNoiseLite.FRACTAL_PING_PONG
-			_spacePhenomenaTextureNoise.fractal_lacunarity = 1
-			_spacePhenomenaTextureNoise.fractal_gain = 0.1
+			_spacePhenoTexNoise.noise_type = FastNoiseLite.TYPE_PERLIN
+			_spacePhenoTexNoise.frequency = 0.0025
+			_spacePhenoTexNoise.fractal_type = FastNoiseLite.FRACTAL_PING_PONG
+			_spacePhenoTexNoise.fractal_lacunarity = 1
+			_spacePhenoTexNoise.fractal_gain = 0.1
 			# IGNORE: Debug
-			print("Adjusted space phenomena texture! ", _spacePhenomena[3])
+			print("Adjusted space phenomena texture! ", _spacePheno[3])
 			
 		2: # Space Phenomenon "PATCHES"
-			_spacePhenomenaTextureColorRamp.offsets = [0, 0.1, 0.5, 6, 1]
-			_spacePhenomenaTextureColorRamp.colors = [
-				Color(lib.generateRandomColor(lib.spaceGasesMinimumColorValue, lib.spaceGasesMaximumColorValue, 1)),
-				Color(lib.generateRandomColor(lib.spaceGasesMinimumColorValue, lib.spaceGasesMaximumColorValue, 1)),
+			_spacePhenoTexColorRamp.offsets = [0, 0.1, 0.5, 6, 1]
+			_spacePhenoTexColorRamp.colors = [
+				Color(lib.genRandColor(lib.gasColorMinRnge, lib.gasColorMaxRnge, 1)),
+				Color(lib.genRandColor(lib.gasColorMinRnge, lib.gasColorMaxRnge, 1)),
 				Color.TRANSPARENT,
-				Color(lib.generateRandomColor(lib.spaceGasesMinimumColorValue, lib.spaceGasesMaximumColorValue, 1)),
+				Color(lib.genRandColor(lib.gasColorMinRnge, lib.gasColorMaxRnge, 1)),
 				Color.TRANSPARENT
 				]
-			_spacePhenomenaTextureNoise.noise_type = FastNoiseLite.TYPE_PERLIN 
-			_spacePhenomenaTextureNoise.frequency = 0.005
-			_spacePhenomenaTextureNoise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
+			_spacePhenoTexNoise.noise_type = FastNoiseLite.TYPE_PERLIN 
+			_spacePhenoTexNoise.frequency = 0.005
+			_spacePhenoTexNoise.fractal_type = FastNoiseLite.FRACTAL_RIDGED
 			# IGNORE: Debug
-			print("Adjusted space phenomena texture! ", _spacePhenomena[3])
+			print("Adjusted space phenomena texture! ", _spacePheno[3])
 	
 	# Assign the generated ramp and noise into the texture and to the node.
-	_spacePhenomena[3].color_ramp = _spacePhenomenaTextureColorRamp
-	_spacePhenomena[3].noise = _spacePhenomenaTextureNoise
+	_spacePheno[3].color_ramp = _spacePhenoTexColorRamp
+	_spacePheno[3].noise = _spacePhenoTexNoise
 	
 	# Removes objects from variable so when set the main texture to null, they will also be changed to null.
-	_spacePhenomenaTextureColorRamp = null
-	_spacePhenomenaTextureNoise = null
+	_spacePhenoTexColorRamp = null
+	_spacePhenoTexNoise = null
 	
 	# IGNORE: Debug
-	print("Loaded space phenomena texture! Visually adjusting now. Thread ", _spacePhenomenonGenerationThread, " will be terminated.")
+	print("Loaded space phenomena texture! Visually adjusting now. Thread ", _spacePhenoGenThread, " will be terminated.")
 	print("#------------------------------------------------------------------------------#")
 
 # Removing textures first in the nodes before generating another.
@@ -108,6 +108,6 @@ func _initiateSceneLoadingInThread(_spacePhenomena: Array) -> void:
 func revertSpacePhenomenaTexturesToDefault() -> void:
 	# IGNORE: Debug
 	print("Texture of nodes has been cleared.")
-	_spaceTexturePhenomena = null
-	get_node("spaceParallaxEffectManager/spacePTParallax/spacePhenomenaTexture").texture = null
+	_spacePhenoTex = null
+	get_node("spacePllxMngr/spacePTPllx/spacePhenoTex").texture = null
 #------------------------------------------------------------------------------#

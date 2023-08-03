@@ -9,20 +9,25 @@
 #------------------------------------------------------------------------------#
 
 # Comments // The comments describes the code BELOW it. Not above it.
-# Comments // Multi-Line isn't supported yet :> """ is used but only for multi-line strings.
+# Comments // Multi-Line isn't supported yet :>
+
+# Naming // Variables starts first with what they are for.
+# Naming // If they are for UI, name it ui... Example: uiQuotes
+# Naming // If the word count for the original word maxed at 12, make it short.
+
+# Subroutines // Don't use the word "initiate", "start"... Especially when startLoading,
+# Subroutines // Just use "load", "check"... 
+# Subroutines  // For functions, verb must be the first word. It must whole.
+
+# Signals // Start with the word "when".
 
 extends Node
 #------------------------------------------------------------------------------#
 # GLOBAL CONFIGURATION 
 #------------------------------------------------------------------------------#
-const spaceMinimumSpawnSeed: int = -9223372036854775807
-const spaceMaximumSpawnSeed: int = 9223372036854775807
-const spaceSectorSize = 1920
-const spaceGasesMinimumColorValue: float = 0.01
-const spaceGasesMaximumColorValue: float = 1.00
-const spaceGasesColorOpacity: float = 0.5
 
-const userInterfaceQuotes: PackedStringArray = [
+# MAIN MENU
+const uiQuotes: PackedStringArray = [
 	"Within the cosmic expanse, remember that you are a universe unto yourself, filled with infinite possibilities waiting to be explored.",
 	"Like a star illuminating the night sky, let your inner light shine brightly and guide you on your unique journey through life.",
 	"In the vastness of space, know that your presence matters, for you are a vital piece in the intricate cosmic puzzle.",
@@ -45,6 +50,16 @@ const userInterfaceQuotes: PackedStringArray = [
 	"In the tapestry of existence, you are an essential thread woven with care and intention. Embrace your worth and always give your best, for the universe celebrates your every effort."
 ] 
 
+# GAME
+const minSpawnSeed: int = -9223372036854775807
+const maxSpawnSeed: int = 9223372036854775807
+const sectSize = 1920
+const gasColorMinRnge: float = 0.01
+const gasColorMaxRnge: float = 1.00
+const gasColorAlpha: float = 0.5
+
+var sectSizeMult: int = 4
+
 #------------------------------------------------------------------------------#
 # GLOBAL OBJECTS
 #------------------------------------------------------------------------------#
@@ -59,7 +74,7 @@ var SSK: String = "[|179645356571623424|ce624280|ee308280|00000000|356cfd80|2|]"
 # GLOBAL GENERATORS 
 #------------------------------------------------------------------------------#
 # Generating random numbers. 
-func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = false):
+func genRand(minVal: float, maxVal: float, type: String = "int", inclNegs: bool = false):
 	# "minVal" for lowest value.
 	# "maxVal" for highest value.
 	# "type" for type of datatype; self-explanatory.
@@ -68,7 +83,7 @@ func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", in
 	# "includeNegatives" for including negative numbers in generation.
 	rng.randomize()
 	var output
-	if includeNegatives: output = rng.randf_range(minVal, maxVal) * (rng.randi() % 2 * 2 - 1)
+	if inclNegs: output = rng.randf_range(minVal, maxVal) * (rng.randi() % 2 * 2 - 1)
 	else: output = rng.randf_range(minVal, maxVal)
 	match type:
 		"int": output = round(output)
@@ -78,26 +93,26 @@ func generateRandomNumber(minVal: float, maxVal: float, type: String = "int", in
 	return output
 
 # Generator Vector2 values with same x, y values.
-func generateRandomVector2(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = false) -> Vector2:
+func genRandVec2(minVal: float, maxVal: float, type: String = "int", inclNegs: bool = false) -> Vector2:
 	var output: Vector2 = Vector2()
-	var returnOutput: float
-	returnOutput = generateRandomNumber(minVal, maxVal, type, includeNegatives)
-	output = Vector2(returnOutput, returnOutput)
+	var result: float
+	result = genRand(minVal, maxVal, type, inclNegs)
+	output = Vector2(result, result)
 	return output
 
 # Generator Vector2 values with different x, y values.
-func generateRandomSeparateVector2(minVal: float, maxVal: float, type: String = "int", includeNegatives: bool = true) -> Vector2:
+func genRandSplitVec2(minVal: float, maxVal: float, type: String = "int", inclNegs: bool = true) -> Vector2:
 	var output: Vector2 = Vector2()
-	output.x = generateRandomNumber(minVal, maxVal, type, includeNegatives)
-	output.y = generateRandomNumber(minVal, maxVal, type, includeNegatives)
+	output.x = genRand(minVal, maxVal, type, inclNegs)
+	output.y = genRand(minVal, maxVal, type, inclNegs)
 	return output
 
-# Generator Color values with opacity manipulation "opacity". Maximum value, "1.0".
-func generateRandomColor(minVal: float = spaceGasesMinimumColorValue, maxVal: float = spaceGasesMaximumColorValue, opacity: float = spaceGasesColorOpacity) -> String:
+# Generates Color values with opacity manipulation "opacity". Returns HTML Color
+func genRandColor(minVal: float = gasColorMinRnge, maxVal: float = gasColorMaxRnge, opacity: float = gasColorAlpha) -> String:
 	var color: Color = Color(
-		generateRandomNumber(minVal, maxVal, "float",  false), 
-		generateRandomNumber(minVal, maxVal, "float", false), 
-		generateRandomNumber(minVal, maxVal, "float",  false),
+		genRand(minVal, maxVal, "float",  false), 
+		genRand(minVal, maxVal, "float", false), 
+		genRand(minVal, maxVal, "float",  false),
 		opacity
 	)
 	var colorHtml: String = color.to_html(true)

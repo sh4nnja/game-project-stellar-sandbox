@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://godot/scr/spacePhenomenaGenerator.gd" id="1_k058o"]
 
-[node name="spacePhenomenaGenerator" type="Node2D"]
+[node name="spacePhenoGen" type="Node2D"]
 script = ExtResource("1_k058o")
 
-[node name="spaceParallaxEffectManager" type="ParallaxBackground" parent="."]
+[node name="spacePllxMngr" type="ParallaxBackground" parent="."]
 layer = 0
 
-[node name="spacePTParallax" type="ParallaxLayer" parent="spaceParallaxEffectManager"]
+[node name="spacePTPllx" type="ParallaxLayer" parent="spacePllxMngr"]
 motion_scale = Vector2(0.2, 0.2)
 
-[node name="spacePhenomenaTexture" type="Sprite2D" parent="spaceParallaxEffectManager/spacePTParallax"]
+[node name="spacePhenoTex" type="Sprite2D" parent="spacePllxMngr/spacePTPllx"]

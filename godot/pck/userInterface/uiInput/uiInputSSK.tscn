@@ -1,15 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://dl052par3gshi"]
+[gd_scene load_steps=12 format=3 uid="uid://dl052par3gshi"]
 
+[ext_resource type="Theme" uid="uid://dput70sdrayl" path="res://godot/tres/uiGlobalTheme.tres" id="1_00chu"]
 [ext_resource type="FontFile" uid="uid://bkedubf4jve6l" path="res://external/font/RobotoCondensed-Regular.ttf" id="1_1bhsh"]
 [ext_resource type="Script" path="res://godot/scr/uiInputSSK.gd" id="2_2nrcw"]
 [ext_resource type="FontFile" uid="uid://b3f6o2t3fsb05" path="res://external/font/RobotoCondensed-Light.ttf" id="3_la0yy"]
 [ext_resource type="AudioStream" uid="uid://m4ny8ff47g0h" path="res://external/aud/fx/select_008 .ogg" id="5_f27em"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4qyjl"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aj1l6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4d3c8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38a0v"]
 bg_color = Color(1, 1, 1, 0.0784314)
@@ -17,87 +12,12 @@ border_color = Color(1, 1, 1, 0.196078)
 corner_radius_bottom_right = 15
 corner_detail = 1
 
-[sub_resource type="Animation" id="Animation_k7q87"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("uiInputSSKPanel:theme_override_styles/panel:border_width_left")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:theme_override_colors/font_placeholder_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.392157)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("uiInputSSKPanel:theme_override_styles/panel:border_color")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.196078)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:theme_override_colors/font_color")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("uiInputSSKLocate/uiInputSSKLocatePanel:theme_override_styles/panel:border_width_left")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("uiInputSSKLocate:theme_override_colors/font_color")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.784314)]
-}
-
 [sub_resource type="Animation" id="Animation_hh1qn"]
 resource_name = "uiInputSSKHovered"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("uiInputSSKPanel:theme_override_styles/panel:border_width_left")
+tracks/0/path = NodePath("uiSSKPanel:theme_override_styles/panel:border_width_left")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -119,12 +39,22 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0.392157), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_ke4dd"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h2o8r"]
+_data = {
+"uiInputSSKHovered": SubResource("Animation_hh1qn")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk4h5"]
+bg_color = Color(1, 1, 1, 0.0784314)
+border_color = Color(1, 1, 1, 0.196078)
+corner_detail = 1
+
+[sub_resource type="Animation" id="Animation_qiqty"]
 resource_name = "uiInputSSKLocateHovered"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("uiInputSSKLocate/uiInputSSKLocatePanel:theme_override_styles/panel:border_width_left")
+tracks/0/path = NodePath("uiLocSSKBtn/uiLocSSKPanel:theme_override_styles/panel:border_width_left")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -136,7 +66,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("uiInputSSKLocate:theme_override_colors/font_color")
+tracks/1/path = NodePath("uiLocSSKBtn:theme_override_colors/font_color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -146,38 +76,18 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0.784314), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_h2o8r"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_by1xw"]
 _data = {
-"RESET": SubResource("Animation_k7q87"),
-"uiInputSSKHovered": SubResource("Animation_hh1qn"),
-"uiInputSSKLocateHovered": SubResource("Animation_ke4dd")
+"uiInputSSKLocateHovered": SubResource("Animation_qiqty")
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fxbg0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_786sr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_itq1c"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a62pk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnlyt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk4h5"]
-bg_color = Color(1, 1, 1, 0.0784314)
-border_color = Color(1, 1, 1, 0.196078)
-corner_detail = 1
-
-[node name="uiInputSSK" type="LineEdit" groups=["SSKInput"]]
+[node name="uiSSK" type="LineEdit" groups=["SSKInput"]]
 offset_top = 35.0
 offset_right = 512.0
 offset_bottom = 83.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme = ExtResource("1_00chu")
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.392157)
 theme_override_fonts/font = ExtResource("1_1bhsh")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_4qyjl")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_aj1l6")
-theme_override_styles/read_only = SubResource("StyleBoxEmpty_4d3c8")
 alignment = 1
 max_length = 62
 context_menu_enabled = false
@@ -185,7 +95,11 @@ clear_button_enabled = true
 caret_blink = true
 script = ExtResource("2_2nrcw")
 
-[node name="uiInputSSKNote" type="Label" parent="."]
+[node name="uiSSKSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f27em")
+bus = &"SFX"
+
+[node name="uiSSKNote" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -1.466
@@ -196,9 +110,9 @@ offset_left = 910.592
 offset_top = 71.52
 offset_right = 1262.59
 offset_bottom = 97.52
-theme_override_fonts/font = ExtResource("3_la0yy")
+theme = ExtResource("1_00chu")
 
-[node name="uiInputSSKTitle" type="Label" parent="."]
+[node name="uiSSKTitle" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.625
@@ -207,23 +121,23 @@ offset_left = 192.0
 offset_top = 3.0
 offset_right = 323.0
 offset_bottom = 29.0
-theme_override_fonts/font = ExtResource("3_la0yy")
+theme = ExtResource("1_00chu")
 text = "Space Sector Key"
 horizontal_alignment = 1
 
-[node name="uiInputSSKPanel" type="Panel" parent="."]
+[node name="uiSSKPanel" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 512.0
 offset_bottom = 48.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_38a0v")
 
-[node name="uiInputSSKAnimation" type="AnimationPlayer" parent="."]
+[node name="uiSSKAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_h2o8r")
 }
 
-[node name="uiInputSSKLocate" type="Button" parent="."]
+[node name="uiLocSSKBtn" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.625
@@ -232,18 +146,13 @@ offset_left = 8.0
 offset_top = 96.0
 offset_right = 136.0
 offset_bottom = 120.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.784314)
+theme = ExtResource("1_00chu")
 theme_override_fonts/font = ExtResource("3_la0yy")
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxEmpty_fxbg0")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_786sr")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_itq1c")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_a62pk")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bnlyt")
 text = "Retrieve Key"
 flat = true
 
-[node name="uiInputSSKLocatePanel" type="Panel" parent="uiInputSSKLocate"]
+[node name="uiLocSSKPanel" type="Panel" parent="uiLocSSKBtn"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.062
@@ -257,14 +166,17 @@ offset_bottom = 39.992
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mk4h5")
 
-[node name="uiInputSSKSFX" type="AudioStreamPlayer" parent="uiInputSSKLocate"]
-stream = ExtResource("5_f27em")
-bus = &"SFX"
+[node name="uiLocSSKAnim" type="AnimationPlayer" parent="uiLocSSKBtn"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_by1xw")
+}
 
 [connection signal="mouse_entered" from="." to="." method="_whenMouseEntered"]
 [connection signal="mouse_exited" from="." to="." method="_whenMouseExited"]
+[connection signal="property_list_changed" from="." to="." method="whenNodePropChanged"]
 [connection signal="text_changed" from="." to="." method="_whenTextChanged"]
-[connection signal="animation_finished" from="uiInputSSKAnimation" to="." method="whenUiInputSSKAnimationFinished"]
-[connection signal="mouse_entered" from="uiInputSSKLocate" to="." method="_whenLocateBtnMouseEntered"]
-[connection signal="mouse_exited" from="uiInputSSKLocate" to="." method="_whenLocateBtnMouseExited"]
-[connection signal="pressed" from="uiInputSSKLocate" to="." method="_whenUIInputSSKLocatePressed"]
+[connection signal="animation_finished" from="uiSSKAnimation" to="." method="whenUiSSKAnimFinished"]
+[connection signal="mouse_entered" from="uiLocSSKBtn" to="." method="_whenSSKLocBtnMouseEntered"]
+[connection signal="mouse_exited" from="uiLocSSKBtn" to="." method="_whenSSKLocBtnMouseExited"]
+[connection signal="pressed" from="uiLocSSKBtn" to="." method="_whenSSKLocBtnPressed"]

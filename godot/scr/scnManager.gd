@@ -1,8 +1,8 @@
 extends Node
 #------------------------------------------------------------------------------#
-
-var _spaceGameProperPath: String = "res://godot/pck/gameSpaceGenerator/spaceGameProper.tscn"
-var _userInterfaceMainMenuPath: String = "res://godot/pck/gameMainMenu/gameMainMenu.tscn"
+# Scene paths here.
+var _gameProperPath: String = "res://godot/pck/gameSpaceGenerator/spaceGameProper.tscn"
+var _uiMenuPath: String = "res://godot/pck/gameMainMenu/gameMainMenu.tscn"
 #------------------------------------------------------------------------------#
 
 
@@ -11,13 +11,13 @@ func _ready() -> void:
 	# IGNORE: Debug
 	print("Initiated PseudoTree ", self, " Initiating scene loading.\n")
 	
-	# Load mainmenu and add to scene.
-	_checkLoadedResourceForSceneAdd(_initiateLoadingPackedScenes(_userInterfaceMainMenuPath))
-	_checkLoadedResourceForSceneAdd(_initiateLoadingPackedScenes(_spaceGameProperPath))
+	# Load mainmenu and game proper to be added to scene.
+	_checkScnRes(_loadPckdScn(_uiMenuPath))
+	_checkScnRes(_loadPckdScn(_gameProperPath))
 
 #------------------------------------------------------------------------------#
 # Check resource first then add to pseudotree. Print error if null.
-func _checkLoadedResourceForSceneAdd(_object: Resource) -> void:
+func _checkScnRes(_object: Resource) -> void:
 	if _object != null:
 		# IGNORE: Debug
 		print("Adding object ", _object, " as a child of PseudoTree ", self)
@@ -30,44 +30,44 @@ func _checkLoadedResourceForSceneAdd(_object: Resource) -> void:
 		print("Resource null. Loading failed.")
 		print("#------------------------------------------------------------------------------#\n")
 
-func _initiateLoadingPackedScenes(_scenePath: String) -> Resource:
+func _loadPckdScn(_scnPath: String) -> Resource:
 	# Progress bar in array to track loading progress.
-	var _sceneLoadingProgress: Array[float] = []
+	var _scnProgress: Array[float] = []
 	# Limiter to stop loader on spamming a lot of 0 on loading.
-	var _sceneLoadingZero: int = 0
-	var _sceneLoadingStatus: int = 1
-	var _sceneLoadedOutput: Resource
+	var _scnZeroCap: int = 0
+	var _scnStatus: int = 1
+	var _scnOutput: Resource
 	
 	# IGNORE: Debug
-	print("Initiating loading scene via string path: ", _scenePath)
+	print("Initiating loading scene via string path: ", _scnPath)
 	# IMPORTANT CODE: Load the scene files via resource loader to facilitate loading on progress bar.
-	ResourceLoader.load_threaded_request(_scenePath)
+	ResourceLoader.load_threaded_request(_scnPath)
 	# IGNORE: Debug
-	print("Proceeding to load ", _scenePath)
+	print("Proceeding to load ", _scnPath)
 	# IMPORTANT CODE: Function 'match' checks for identifying status for visual output.
 	while true:
-		match _sceneLoadingStatus:
+		match _scnStatus:
 			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-				_sceneLoadingStatus = ResourceLoader.load_threaded_get_status(_scenePath, _sceneLoadingProgress)
+				_scnStatus = ResourceLoader.load_threaded_get_status(_scnPath, _scnProgress)
 				# Prevents zero percent spamming.
-				if _sceneLoadingProgress[0] == 0:
-					if _sceneLoadingZero < 5:
+				if _scnProgress[0] == 0:
+					if _scnZeroCap < 5:
 						# IGNORE: Debug
-						print("    Loading ", _scenePath, " Progress: ", snapped(_sceneLoadingProgress[0] * 100, 0.01), "%")
-						_sceneLoadingZero += 1
+						print("    Loading ", _scnPath, " Progress: ", snapped(_scnProgress[0] * 100, 0.01), "%")
+						_scnZeroCap += 1
 				else:
 					# IGNORE: Debug
-					print("    Loading ", _scenePath, " Progress: ", snapped(_sceneLoadingProgress[0] * 100, 0.01), "%")
+					print("    Loading ", _scnPath, " Progress: ", snapped(_scnProgress[0] * 100, 0.01), "%")
 			ResourceLoader.THREAD_LOAD_LOADED:
 				# IGNORE: Debug
-				print("Loaded ", _scenePath)
+				print("Loaded ", _scnPath)
 				break
 			ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 				# IGNORE: Debug
-				print("Loading ", _scenePath, " has failed. Invalid Resource.")
-				_sceneLoadedOutput = null
+				print("Loading ", _scnPath, " has failed. Invalid Resource.")
+				_scnOutput = null
 				break
-	_sceneLoadedOutput =  ResourceLoader.load_threaded_get(_scenePath)
-	return _sceneLoadedOutput
+	_scnOutput =  ResourceLoader.load_threaded_get(_scnPath)
+	return _scnOutput
 
 #------------------------------------------------------------------------------#
