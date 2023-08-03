@@ -1,0 +1,271 @@
+[gd_scene load_steps=9 format=3 uid="uid://cit5145nnwl6i"]
+
+[ext_resource type="Script" path="res://godot/scr/uiCustomSector.gd" id="1_hn6on"]
+[ext_resource type="AudioStream" uid="uid://m4ny8ff47g0h" path="res://external/aud/fx/select_008 .ogg" id="2_evttq"]
+[ext_resource type="Theme" uid="uid://dput70sdrayl" path="res://godot/tres/uiGlobalTheme.tres" id="3_c176a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjomm"]
+bg_color = Color(1, 1, 1, 0.0784314)
+border_color = Color(1, 1, 1, 0.196078)
+corner_detail = 1
+
+[sub_resource type="Gradient" id="Gradient_jg6er"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h0c7q"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mpru2"]
+width = 128
+height = 128
+color_ramp = SubResource("Gradient_jg6er")
+noise = SubResource("FastNoiseLite_h0c7q")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wsl3"]
+bg_color = Color(1, 1, 1, 0.0784314)
+border_color = Color(1, 1, 1, 0.196078)
+corner_radius_bottom_right = 15
+corner_detail = 1
+
+[node name="uiMenuCustSect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hn6on")
+
+[node name="uiSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_evttq")
+bus = &"SFX"
+
+[node name="uiMenuPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 96.0
+offset_right = 944.0
+offset_bottom = 936.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kjomm")
+
+[node name="uiMenuBg" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuG" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuG1" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuG2" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuS" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuS1" type="TextureRect" parent="uiMenuPanel"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.038
+anchor_right = 0.962
+anchor_bottom = 0.962
+offset_left = 0.079998
+offset_top = 0.079998
+offset_right = -0.0800781
+offset_bottom = -0.0800781
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_mpru2")
+
+[node name="uiMenuConfig" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="uiSeedPanel" type="Panel" parent="uiMenuConfig"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.089
+anchor_right = 0.958
+anchor_bottom = 0.133
+offset_left = -56.0
+offset_top = 143.88
+offset_right = 0.639893
+offset_bottom = 144.36
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wsl3")
+
+[node name="uiSeed" type="LineEdit" parent="uiMenuConfig/uiSeedPanel"]
+layout_mode = 0
+offset_right = 744.0
+offset_bottom = 45.0
+theme = ExtResource("3_c176a")
+placeholder_text = "Any positive or negative number"
+alignment = 1
+
+[node name="uiSeedLabel" type="Label" parent="uiMenuConfig/uiSeedPanel/uiSeed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.146
+anchor_right = -0.024
+anchor_bottom = 1.133
+offset_left = -0.223991
+offset_right = -0.256
+offset_bottom = 0.0149994
+theme = ExtResource("3_c176a")
+theme_override_font_sizes/font_size = 40
+text = "Seed"
+
+[node name="uiColorPanel" type="Panel" parent="uiMenuConfig"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.525
+anchor_top = 0.226
+anchor_right = 0.958
+anchor_bottom = 0.593
+offset_left = -6.10352e-05
+offset_top = 139.92
+offset_right = 0.639893
+offset_bottom = 180.56
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wsl3")
+
+[node name="uiColorLabel" type="Label" parent="uiMenuConfig/uiColorPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.436
+anchor_top = -0.143
+anchor_right = 0.57
+anchor_bottom = -0.027
+offset_left = 0.127991
+offset_top = 0.064003
+offset_right = 0.359955
+offset_bottom = 8.376
+theme = ExtResource("3_c176a")
+theme_override_font_sizes/font_size = 40
+text = "Colors"
+
+[node name="uiColorCont" type="HBoxContainer" parent="uiMenuConfig/uiColorPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.989
+offset_left = 8.0
+offset_top = 29.0
+offset_right = -8.0
+offset_bottom = -19.193
+alignment = 1
+
+[node name="uiColorPickerG" type="ColorPicker" parent="uiMenuConfig/uiColorPanel/uiColorCont"]
+layout_mode = 2
+size_flags_horizontal = 12
+size_flags_vertical = 12
+theme = ExtResource("3_c176a")
+alignment = 1
+edit_alpha = false
+picker_shape = 1
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+presets_visible = false
+
+[node name="uiColorPickerG1" type="ColorPicker" parent="uiMenuConfig/uiColorPanel/uiColorCont"]
+layout_mode = 2
+size_flags_horizontal = 12
+size_flags_vertical = 12
+theme = ExtResource("3_c176a")
+alignment = 1
+edit_alpha = false
+picker_shape = 1
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+presets_visible = false
+
+[node name="uiColorPickerG2" type="ColorPicker" parent="uiMenuConfig/uiColorPanel/uiColorCont"]
+layout_mode = 2
+size_flags_horizontal = 12
+size_flags_vertical = 12
+theme = ExtResource("3_c176a")
+alignment = 1
+edit_alpha = false
+picker_shape = 1
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+presets_visible = false
+
+[connection signal="text_changed" from="uiMenuConfig/uiSeedPanel/uiSeed" to="." method="whenSeedTextChanged"]
+[connection signal="color_changed" from="uiMenuConfig/uiColorPanel/uiColorCont/uiColorPickerG" to="." method="whenCPickerChanged"]
+[connection signal="color_changed" from="uiMenuConfig/uiColorPanel/uiColorCont/uiColorPickerG1" to="." method="whenCPicker1Changed"]
+[connection signal="color_changed" from="uiMenuConfig/uiColorPanel/uiColorCont/uiColorPickerG2" to="." method="whenCPicker2Changed"]

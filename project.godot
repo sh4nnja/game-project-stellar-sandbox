@@ -22,6 +22,7 @@ boot_splash/minimum_display_time=100
 [audio]
 
 buses/default_bus_layout="res://godot/tres/soundBus.tres"
+driver/mix_rate=96000
 
 [autoload]
 
@@ -35,7 +36,7 @@ window/size/mode=3
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
-window/vsync/vsync_mode=2
+window/vsync/vsync_mode=0
 
 [gui]
 

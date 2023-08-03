@@ -1,18 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://b357pus0d553w"]
+[gd_scene load_steps=9 format=3 uid="uid://b357pus0d553w"]
 
-[ext_resource type="FontFile" uid="uid://bkedubf4jve6l" path="res://external/font/RobotoCondensed-Regular.ttf" id="1_ehbqw"]
 [ext_resource type="Script" path="res://godot/scr/uiMenuStartExploration.gd" id="2_4ujau"]
+[ext_resource type="Theme" uid="uid://dput70sdrayl" path="res://godot/tres/uiGlobalTheme.tres" id="3_tctqs"]
 [ext_resource type="AudioStream" uid="uid://m4ny8ff47g0h" path="res://external/aud/fx/select_008 .ogg" id="3_trr1o"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fxbg0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_786sr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_itq1c"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a62pk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnlyt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkp5y"]
 bg_color = Color(1, 1, 1, 0.0784314)
@@ -151,14 +141,9 @@ anchor_right = 0.179
 anchor_bottom = 0.044
 offset_right = 0.319977
 offset_bottom = 0.479996
+theme = ExtResource("3_tctqs")
 theme_override_colors/font_color = Color(1, 1, 1, 0.784314)
-theme_override_fonts/font = ExtResource("1_ehbqw")
 theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxEmpty_fxbg0")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_786sr")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_itq1c")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_a62pk")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bnlyt")
 text = "INITIATE SECTOR EXPLORATION
 "
 flat = true

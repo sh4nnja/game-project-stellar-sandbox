@@ -1,17 +1,19 @@
 extends LineEdit
 #------------------------------------------------------------------------------#
 
-@onready var _uiInputSSKAnimation: AnimationPlayer = get_node("uiInputSSKAnimation")
-@onready var _uiInputSSKLocateBtn: Button = get_node("uiInputSSKLocate")
-@onready var _uiInputNotice: Label = get_node("uiInputSSKNote")
+@onready var _uiSSKAnimation: AnimationPlayer = get_node("uiSSKAnimation")
+@onready var _uiLocSSKBtn: Button = get_node("uiLocSSKBtn")
+@onready var _uiLocSSKBtnAnim: AnimationPlayer = get_node("uiLocSSKBtn/uiLocSSKAnim")
+@onready var _uiSSKSFX: AudioStreamPlayer = get_node("uiSSKSFX")
+@onready var _uiSSKNote: Label = get_node("uiSSKNote")
 
 #------------------------------------------------------------------------------#
 signal locatingSpaceSector
 
 #------------------------------------------------------------------------------#
-var _uiInputSKKOnFocus: bool = false
-var _uiInputSKKOnHover: bool = false
-var _uiInputSSKLocateMode: bool = true
+var _uiSKKFocus: bool = false
+var _uiSKKHover: bool = false
+var _uiSSKLocMode: bool = true
 
 #------------------------------------------------------------------------------#
 func _ready() -> void:
@@ -21,14 +23,14 @@ func _ready() -> void:
 func _gui_input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			_uiInputSKKOnFocus = true
+			_uiSKKFocus = true
 
 # Emits when the textBox is deselected.
 func _unhandled_input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			if _uiInputSKKOnFocus: 
-				_uiInputSKKOnFocus = false
+			if _uiSKKFocus: 
+				_uiSKKFocus = false
 				_whenMouseExited() 
 				release_focus()
 
@@ -91,46 +93,49 @@ func _checkSSK(SSK: String) -> int:
 	return _SSKOverallValidity
 
 #------------------------------------------------------------------------------#
-func whenUiInputSSKAnimationFinished(_anim: String) -> void:
+# NOTE: Tinatamad ako magrename ng signals WHAHAHA jk
+func whenUiSSKAnimFinished(_anim: String) -> void:
 	# FORMAT: Waits for the animation to stop before pausing.
 	# FORMAT: This way, the hover anim will not glitch when selected.
-	if _uiInputSKKOnFocus:
-		_uiInputSSKAnimation.pause()
+	if _uiSKKFocus:
+		_uiSSKAnimation.pause()
 
 # Fires when textbox is hovered.
 func _whenMouseEntered() -> void:
-	_uiInputSKKOnHover = true
-	if !_uiInputSKKOnFocus:
-		_uiInputSSKAnimation.play("uiInputSSKHovered")
+	_uiSKKHover = true
+	if !_uiSKKFocus:
+		_uiSSKAnimation.play("uiInputSSKHovered")
+		_uiSSKSFX.play()
 
 # Fires when textbox exits hover.
 func _whenMouseExited() -> void:
-	_uiInputSKKOnHover = false
-	if !_uiInputSKKOnFocus:
-		_uiInputSSKAnimation.play_backwards("uiInputSSKHovered")
+	_uiSKKHover = false
+	if !_uiSKKFocus:
+		_uiSSKAnimation.play_backwards("uiInputSSKHovered")
 
-func _whenLocateBtnMouseEntered():
-	if !_uiInputSSKLocateBtn.disabled:
-		_uiInputSSKAnimation.play("uiInputSSKLocateHovered")
+func _whenSSKLocBtnMouseEntered():
+	if !_uiLocSSKBtn.disabled:
+		_uiLocSSKBtnAnim.play("uiInputSSKLocateHovered")
+		_uiSSKSFX.play()
 
-func _whenLocateBtnMouseExited():
-	if !_uiInputSSKLocateBtn.disabled:
-		_uiInputSSKAnimation.play_backwards("uiInputSSKLocateHovered")
+func _whenSSKLocBtnMouseExited():
+	if !_uiLocSSKBtn.disabled:
+		_uiLocSSKBtnAnim.play_backwards("uiInputSSKLocateHovered")
 
-func _whenUIInputSSKLocatePressed():
-	if !_uiInputSSKLocateMode:
+func _whenSSKLocBtnPressed():
+	if !_uiSSKLocMode:
 		# If there's valid text in SSK Input, this will fire.
 		locatingSpaceSector.emit()
-		await _uiInputSSKAnimation.animation_finished
-		_uiInputSSKAnimation.play_backwards("uiInputSSKHovered")
+		await _uiSSKAnimation.animation_finished
+		_uiSSKAnimation.play_backwards("uiInputSSKHovered")
 		text = ""
 		_whenTextChanged(text)
 	else:
 		# If there's no text in SSK Input, the button will enter copy SSK mode.
 		DisplayServer.clipboard_set(lib.SSK)
-		_uiInputSSKLocateBtn.text = "SSK Copied!"
+		_uiLocSSKBtn.text = "Copied To Clipboard!"
 		await get_tree().create_timer(1).timeout
-		_uiInputSSKLocateBtn.text = "Retrieve Key"
+		_uiLocSSKBtn.text = "Retrieve Key"
 
 #------------------------------------------------------------------------------#
 # Fires when user inputs text in the textbox.
@@ -141,37 +146,45 @@ func _whenTextChanged(_stringText: String) -> void:
 		# Default, " "
 		0: 
 			modulate = Color.WHITE
-			_uiInputSSKLocateBtn.disabled = true
-			_uiInputNotice.text = ""
+			_uiLocSSKBtn.disabled = false
+			_uiSSKNote.text = ""
 			# Changes to copy SSK if no text is placed.
-			_uiInputSSKLocateBtn.text = "Retrieve Key"
-			_uiInputSSKLocateMode = true
+			_uiLocSSKBtn.text = "Retrieve Key"
+			_uiSSKLocMode = true
 			
 		# Invalid SSK
 		1: 
 			modulate = Color.RED
-			_uiInputSSKLocateBtn.disabled = true
-			_uiInputNotice.text = "Invalid SSK. Check for 'key' errors."
+			_uiLocSSKBtn.disabled = true
+			_uiSSKNote.text = "Invalid SSK. Check for 'key' errors."
 			# Changes to locate SSK if text is placed.
-			_uiInputSSKLocateBtn.text = "Locate Sector"
-			_uiInputSSKLocateMode = false
+			_uiLocSSKBtn.text = "Locate Sector"
+			_uiSSKLocMode = false
 		# Valid SSK Format, But presets are error. Will replace them randomly.
 		2: 
 			modulate = Color.AQUA
-			_uiInputSSKLocateBtn.disabled = false
-			_uiInputNotice.text = "Warning! Corrupted SSK. Might affect location protocol."
+			_uiLocSSKBtn.disabled = false
+			_uiSSKNote.text = "Warning! Corrupted SSK. Might affect location protocol."
 			# Changes to locate SSK if text is placed.
-			_uiInputSSKLocateBtn.text = "Locate Sector"
-			_uiInputSSKLocateMode = false
+			_uiLocSSKBtn.text = "Locate Sector"
+			_uiSSKLocMode = false
 		# Valid and Accepted SSK Format, no change done.
 		3: 
 			modulate = Color.GREEN
-			_uiInputNotice.text = "Valid SSK. Welcome home."
+			_uiSSKNote.text = "Valid SSK. Welcome home."
 			# Changes to locate SSK if text is placed.
-			_uiInputSSKLocateBtn.text = "Locate Sector"
-			_uiInputSSKLocateMode = false
+			_uiLocSSKBtn.text = "Locate Sector"
+			_uiSSKLocMode = false
 			lib.SSK = _stringText
 
 # Update the placeholder once the sector key has been created.
 func updatePlaceholderText() -> void:
 	placeholder_text = lib.SSK
+
+# Signal when node properties are changed. Useful for UI when disabling mouse passes.
+func whenNodePropChanged():
+	if _uiLocSSKBtn:
+		if mouse_filter == Control.MOUSE_FILTER_STOP:
+			_uiLocSSKBtn.mouse_filter = Control.MOUSE_FILTER_STOP
+		elif mouse_filter == Control.MOUSE_FILTER_IGNORE:
+			_uiLocSSKBtn.mouse_filter = Control.MOUSE_FILTER_IGNORE

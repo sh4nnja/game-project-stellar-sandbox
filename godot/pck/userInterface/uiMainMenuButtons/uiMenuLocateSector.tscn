@@ -1,18 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bp6uu25kxrene"]
+[gd_scene load_steps=8 format=3 uid="uid://bp6uu25kxrene"]
 
+[ext_resource type="Theme" uid="uid://dput70sdrayl" path="res://godot/tres/uiGlobalTheme.tres" id="1_1atw1"]
 [ext_resource type="FontFile" uid="uid://b3f6o2t3fsb05" path="res://external/font/RobotoCondensed-Light.ttf" id="1_icer6"]
 [ext_resource type="Script" path="res://godot/scr/uiMenuLocateSector.tres.gd" id="2_ch47w"]
 [ext_resource type="AudioStream" uid="uid://u57hkwqqf64b" path="res://external/aud/fx/select_007.ogg" id="3_pcdra"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fxbg0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5c1fb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_moh0b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n340r"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xvdlj"]
 
 [sub_resource type="Animation" id="Animation_f2c4x"]
 length = 0.001
@@ -54,14 +45,10 @@ _data = {
 [node name="uiMenuLocateSector" type="Button"]
 offset_right = 192.0
 offset_bottom = 32.0
+theme = ExtResource("1_1atw1")
 theme_override_colors/font_color = Color(1, 1, 1, 0.392157)
 theme_override_fonts/font = ExtResource("1_icer6")
 theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxEmpty_fxbg0")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_5c1fb")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_moh0b")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_n340r")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xvdlj")
 text = "LOCATE SECTOR
 "
 flat = true

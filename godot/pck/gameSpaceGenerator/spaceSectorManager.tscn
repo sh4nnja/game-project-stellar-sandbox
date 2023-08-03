@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://ndsnl58qknvl" path="res://godot/pck/gameSpaceGenerator/spacePhenomenaGenerator.tscn" id="3_xphlk"]
 [ext_resource type="PackedScene" uid="uid://ipqn6c3kseo2" path="res://godot/pck/gameSpaceGenerator/spaceBackgroundGenerator.tscn" id="4_ooul8"]
 
-[node name="spaceSectorManager" type="Node2D" groups=["spaceSectorManager"]]
+[node name="spaceSectMngr" type="Node2D" groups=["spaceSectorManager"]]
 texture_filter = 1
 script = ExtResource("1_152lw")
 
-[node name="spaceEnvironment" type="WorldEnvironment" parent="."]
+[node name="spaceEnv" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_25skj")
 
 [node name="spaceWall" type="StaticBody2D" parent="."]
@@ -18,8 +18,8 @@ collision_mask = 0
 [node name="shape" type="CollisionPolygon2D" parent="spaceWall"]
 polygon = PackedVector2Array(2048, 2048, 2048, -2048, -2048, -2048, -2048, 2048, 2048, 2048, 2080, 2080, -2080, 2080, -2080, -2080, 2080, -2080, 2080, 2080)
 
-[node name="spacePhenomenaGenerator" parent="." instance=ExtResource("3_xphlk")]
+[node name="spacePhenoGen" parent="." instance=ExtResource("3_xphlk")]
 
-[node name="spaceBackgroundGenerator" parent="." instance=ExtResource("4_ooul8")]
+[node name="spaceBgGen" parent="." instance=ExtResource("4_ooul8")]
 
-[node name="spaceAssets" type="Node2D" parent="."]
+[node name="spaceAssts" type="Node2D" parent="."]
